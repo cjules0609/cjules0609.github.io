@@ -1,12 +1,15 @@
 {
   "name": "github-react-portfolio-template",
-  "homepage": "https://YourUserName.github.io/your-repo/",
+  "homepage": "/",
   "version": "1.0.4",
   "private": true,
   "dependencies": {
     "@iconify/react": "^4.1.0",
     "@reduxjs/toolkit": "^2.5.0",
+    "audit": "^0.0.6",
     "bootstrap": "^5.3.3",
+    "fix": "^0.0.6",
+    "npm": "^11.5.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
