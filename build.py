@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+"""Assemble the reviewed static site without drafts or local metadata."""
+from pathlib import Path
+import shutil
+
+source = Path(__file__).resolve().parent
+target = source / "_site"
+files = ["index.html", "styles.css", "script.js",
+         "assets/Connery-Chen-CV.pdf", "assets/portrait.png",
+         "assets/favicon.svg", "assets/favicon.ico", "assets/favicon.png",
+         "assets/apple-touch-icon.png", "assets/promptx-logo.svg",
+         "assets/vegasafterglow-logo.svg"]
+for name in files:
+    if not (source / name).is_file():
+        raise FileNotFoundError(name)
+if target.exists():
+    shutil.rmtree(target)
+for name in files:
+    destination = target / name
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source / name, destination)
+(target / ".nojekyll").touch()
+print(f"Assembled {len(files)} public files in {target}")

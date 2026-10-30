@@ -1,96 +1,46 @@
-# A React Portfolio Template for GitHub
+# Connery J. Chen — final website
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/mshuber1981/github-react-portfolio-template?color=%2361dbfb&style=for-the-badge&logo=github)](https://github.com/mshuber1981/github-react-portfolio-template/stargazers/) [![GitHub Repo Forks](https://img.shields.io/github/forks/mshuber1981/github-react-portfolio-template?color=%2361dbfb&style=for-the-badge&logo=github&label=Forks)](https://github.com/mshuber1981/github-react-portfolio-template/network/members) [![X (formerly Twitter) URL](https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com&style=for-the-badge&logo=X&label=Say%20thank%20you!&labelColor=black&color=black)](https://twitter.com/intent/tweet?text=Thanks%20for%20the%20awesome%20Portfolio%20Template!%20https://github.com/mshuber1981/github-react-portfolio-template&via=MikeyHuber1981)
+A standalone, buildless website for GitHub Pages. The previous React implementation, including its existing local edits, is preserved in `legacy/`. No packages, API keys, external fonts, or server are required for production.
 
-A performant, accessible, progressive React portfolio template that uses the [GitHub REST API](https://docs.github.com/en/free-pro-team@latest/rest).
+## Preview
 
-Add your GitHub username once and all of your info will automatically be updated. Deploy to GitHub pages in a few simple steps.
+From this directory, run `python3 -m http.server 4173` and open http://localhost:4173/ . Opening index.html directly also works.
 
-## [Live Demo](https://mshuber1981.github.io/github-react-portfolio-template/#/)
+## Update content
 
-[Google PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/)
+- `index.html`: biography, research, teaching, outreach, links, and section order.
+- `script.js`: publication metadata, navigation, email reveal, and the scroll-driven hero.
+- `styles.css`: colors, spacing, typography, and mobile breakpoints.
+- `assets/Connery-Chen-CV.pdf`: replace with a new PDF using the same filename.
+- `assets/portrait.png`: replace with a new portrait using the same filename.
 
-![Page Speed](/README_images/speed.png)
+The contact button decodes the email only after interaction. This deters simple scraping; the downloadable CV still includes the public professional email address.
 
-## Light And Dark Themes
+The hero is the only interactive viewing-geometry illustration. Scrolling sweeps a bipolar jet past a fixed detector. The “In beam” indicator follows the visible cone boundary. Three detector-facing signal arcs brighten and glow most strongly at exact alignment, fading smoothly away from the axis. Their brightness is schematic rather than calibrated photometry. Reduced-motion users see a static aligned illustration.
 
-![Hero Light](/README_images/hero.png)
+## Assemble the final working version
 
-![Hero Dark](/README_images/heroDark.png)
+Run `python3 build.py` from the repository root. It creates `_site/` with only the final HTML, CSS, JavaScript, CV, portrait, official software logos, and transparent CC favicon formats. The output is ignored by Git and can be regenerated. Preview that output with `python3 -m http.server 4174 --directory _site`.
 
-### Getting Started
+Design option sheets are archived outside the repository. macOS resource-fork metadata (`._*`) is ignored. The current header and favicon use the selected large-C/small-C design; favicon backgrounds are transparent.
 
-1. [Create a repository from this template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
-2. [Clone your new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-3. Make sure [Node](https://nodejs.org/en/) is installed
-4. Open your project and install the dependencies
+## Deploy to GitHub Pages
 
-   ```bash
-   npm install
-   ```
+The supplied `deploy-pages.yml.example` is intentionally inactive during design review. Once the design is agreed:
 
-5. Navigate to the src directory and open src/config.js
-6. Add your GitHub username ([src/config.js](https://github.com/mshuber1981/github-react-portfolio-template/blob/main/src/config.js#L18) line 18)
+1. Copy that file to `.github/workflows/deploy-pages.yml` at the repository root.
+2. Set the repository's Settings → Pages → Source to GitHub Actions.
+3. Review the repository diff, then commit and push the final site and workflow.
+4. Run the “Deploy redesigned website” workflow from GitHub Actions.
 
-   ```javascript
-   /* START HERE
-   ************************************************************** 
-     Add your GitHub username (string - "YourUsername") below.
-   */
-   export const githubUsername = "Your GitHub username here";
-   ```
+The workflow runs the same assembly script and uploads `_site/` as the public site. The public output excludes documentation, the workflow example, and `legacy/`. No custom domain is assumed. Publication itself requires GitHub access and has not been performed.
 
-7. Start the development server to view the results
+## Verification
 
-   ```bash
-   npm start
-   ```
+Verified in browser at phone and desktop widths: no horizontal overflow, portrait loading, section navigation, mobile menu open/close, expandable research, four publications, email reveal, and scroll-driven alignment, cone-boundary detection, and signal-arc brightness. JavaScript syntax checked. Reduced-motion support and keyboard focus styles are included.
 
-### Updating the Contact section
+Official software logos are copied from the projects’ assets/logo.svg files: github.com/cjules0609/PromptX and github.com/YihanWangAstro/VegasAfterglow.
 
-![Projects](/README_images/contact.png)
+## Previous implementation
 
-1. The contact form uses [Formspree](https://formspree.io/), create an account and add your endpoint URL ([src/config.js](https://github.com/mshuber1981/github-react-portfolio-template/blob/main/src/config.js#L114) line 114)
-
-   ```javascript
-   /* Contact Info
-   ************************************************************** 
-     Add your formspree endpoint below.
-     https://formspree.io/
-   */
-   export const formspreeUrl = "https://formspree.io/f/YourEndpoint";
-   ```
-
-### Deploy
-
-A helpful guide for Create React App deployments with GitHub Pages can be found [here](https://create-react-app.dev/docs/deployment#github-pages).
-
-1. Update the homepage value ([package.json](https://github.com/mshuber1981/github-react-portfolio-template/blob/main/package.json#L3) line 3)
-
-   ```json
-   "homepage": "https://YourUserName.github.io/your-repo/",
-   ```
-
-2. Run the deploy command
-
-   ```bash
-   npm run deploy
-   ```
-
-### Customization Options
-
-Checkout the [Wiki](https://github.com/mshuber1981/github-react-portfolio-template/wiki) for additional customization options:
-
-- [Updating the Navbar Logo](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-Navbar-Logo)
-- [Updating the Main section](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-Main-section)
-- [Updating the About Me section](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-About-Me-section)
-- [Updating the Skills section](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-Skills-section)
-- [Updating the Projects section](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-Projects-section)
-- [Updating the theme color](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-theme-color)
-- [Updating the Footer icons theme (light or dark)](https://github.com/mshuber1981/github-react-portfolio-template/wiki/Updating-the-Footer-icons-theme)
-
-[Back to top :top:](#a-react-portfolio-template-for-github)
-
-### License
-
-[MIT](https://choosealicense.com/licenses/mit/)
+`legacy/` preserves the old React source, package files, local assets, and previous README. Its existing uncommitted changes were retained. The current site needs no npm install or React build. The workflow example is inactive until copied into `.github/workflows/`.
