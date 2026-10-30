@@ -5,7 +5,7 @@ import shutil
 
 source = Path(__file__).resolve().parent
 target = source / "_site"
-files = ["index.html", "styles.css", "script.js",
+files = ["index.html", "styles.css", "script.js", "service-worker.js",
          "assets/Connery-Chen-CV.pdf", "assets/portrait.png",
          "assets/favicon.svg", "assets/favicon.ico", "assets/favicon.png",
          "assets/apple-touch-icon.png", "assets/promptx-logo.svg",

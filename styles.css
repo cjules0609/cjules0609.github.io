@@ -54,3 +54,14 @@
 
 /* Keep the revealed address proportionate to the contact copy. */
 .contact-section .email-link{font-size:clamp(1.15rem,3.2vw,1.65rem);gap:16px}
+
+/* Align the desktop illustration with the main hero text. */
+@media(min-width:901px){.hero .cosmos{margin-top:64px}}
+
+/* Scroll-scrubbed research illustrations. */
+.merger i{transform:translate(-50%,-50%)}
+.merger span{left:50%;top:50%;width:94px;height:58px;transform:translate(-50%,-50%)}
+.frb-magnetar svg{overflow:visible}
+@media(max-width:700px){.research-symbol{display:block;width:130px;height:110px;margin-top:8px}}
+
+.merger-ejecta{position:absolute;inset:0;pointer-events:none;overflow:visible}

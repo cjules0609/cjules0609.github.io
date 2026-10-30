@@ -44,3 +44,5 @@ Official software logos are copied from the projects’ assets/logo.svg files: g
 ## Previous implementation
 
 `legacy/` preserves the old React source, package files, local assets, and previous README. Its existing uncommitted changes were retained. The current site needs no npm install or React build. The workflow example is inactive until copied into `.github/workflows/`.
+
+The root `service-worker.js` retires the previous React offline cache for returning visitors. Keep it in the deployment so old browsers can update.

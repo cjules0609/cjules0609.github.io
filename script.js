@@ -23,20 +23,24 @@ const menuButton=document.querySelector('.menu-toggle');const nav=document.query
 menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);});
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menuButton.setAttribute('aria-expanded','false');nav.classList.remove('open');}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('open');menuButton.focus();}});
-// Sweep from the first scroll pixel until the figure leaves the viewport.
+// Let the trailing cone edge pass the detector near the top of the viewport.
+const researchSymbols=[...document.querySelectorAll('.research-symbol')];
 const cosmos=document.querySelector('.cosmos');const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');let sweepQueued=false;
 function updateSweep(){
  sweepQueued=false;
  const figure=cosmos.getBoundingClientRect();
- const end=Math.max(1,figure.bottom+scrollY);
- const progress=Math.max(0,Math.min(1,scrollY/end));
  const w=cosmos.clientWidth,h=cosmos.clientHeight;
  const icon=document.querySelector('.satellite svg').getBoundingClientRect();
+ // This is a crossing milestone, not the end of the animation.
+ const crossingScroll=Math.max(1,icon.top+scrollY-72);
  const detectorX=icon.left-figure.left+icon.width/2,detectorY=icon.top-figure.top+icon.height/2;
  const dx=detectorX-w/2,dy=detectorY-h/2,length=Math.hypot(dx,dy),ux=dx/length,uy=dy/length;
  const detectorAngle=Math.atan2(dx,-dy)*180/Math.PI;
- const sweep=reduceMotion.matches?detectorAngle:detectorAngle-34+76*progress;
- cosmos.style.setProperty('--sweep',sweep+'deg');const jet=document.querySelector('.jet-top');const halfCone=Math.atan2(jet.offsetWidth/2,jet.offsetHeight)*180/Math.PI;const difference=Math.abs(((sweep-detectorAngle+540)%360)-180);const hit=difference<=halfCone;cosmos.classList.toggle('on-beam',hit);document.querySelector('#detector-status').value=hit?'In beam':'Off beam';
+ const jet=document.querySelector('.jet-top');
+ const halfCone=Math.atan2(jet.offsetWidth/2,jet.offsetHeight)*180/Math.PI;
+ const travel=Math.max(0,(34+halfCone+2)*Math.min(scrollY,figure.bottom+scrollY)/crossingScroll);
+ const sweep=reduceMotion.matches?detectorAngle:detectorAngle-34+travel;
+ cosmos.style.setProperty('--sweep',sweep+'deg');const difference=Math.abs(((sweep-detectorAngle+540)%360)-180);const hit=difference<=halfCone;cosmos.classList.toggle('on-beam',hit);document.querySelector('#detector-status').value=hit?'In beam':'Off beam';
  // A schematic Doppler response: strongest at exact alignment, smoothly
  // dimmer away from it. Visual compression keeps the off-axis arcs visible.
  const alignment=Math.exp(-.5*(difference/8)**2);
@@ -50,7 +54,39 @@ function updateSweep(){
  const guide=document.querySelector('.geometry-guide');
  guide.setAttribute('viewBox',`0 0 ${w} ${h}`);
  guide.querySelector('path').setAttribute('d',`M${w/2} ${h/2}L${detectorX-58*ux} ${detectorY-58*uy}`);
+ updateResearchSymbols();
 
+}
+// Each illustration scrubs forward and backward with its own viewport position.
+function updateResearchSymbols(){
+ for(const symbol of researchSymbols){
+  const box=symbol.getBoundingClientRect();
+  // Begin below the viewport, leaving the inspiral visible before merger.
+  const p=reduceMotion.matches?0:Math.max(0,Math.min(1,(innerHeight*1.35-box.top)/(innerHeight+box.height*.3)));
+  if(symbol.classList.contains('merger')){
+   const inspiral=Math.min(1,p/.88);
+   const angle=inspiral*Math.PI*3.6,radius=43*Math.pow(1-inspiral,.8);
+   symbol.querySelectorAll('i').forEach((star,index)=>{
+    const phase=angle+index*Math.PI;
+    star.style.left=`calc(50% + ${Math.cos(phase)*radius}px)`;
+    star.style.top=`calc(50% + ${Math.sin(phase)*radius*.6}px)`;
+   });
+   symbol.querySelector('span').style.transform=`translate(-50%,-50%) rotate(${p*60}deg) scale(${1-inspiral*.9})`;
+   const aftermath=Math.max(0,(p-.88)/.12);
+   symbol.querySelector('.merger-afterglow').setAttribute('opacity',String(Math.min(1,aftermath*3)));
+   symbol.querySelector('.merger-jets').setAttribute('transform',`scale(1 ${.15+aftermath*.85})`);
+   symbol.querySelector('.kilonova').setAttribute('transform',`scale(${.25+aftermath*.95} ${.5+aftermath*.5})`);
+  }else if(symbol.classList.contains('fxt-flash')){
+   symbol.querySelectorAll('.fxt-pulse').forEach(pulse=>{
+    pulse.setAttribute('transform',`scale(${.65+p*.8})`);
+    pulse.style.opacity=String(.85-p*.5);
+   });
+  }else{
+   const phase=p*Math.PI*2;
+   symbol.querySelector('.magnetar-rotor').setAttribute('transform',`scale(${Math.cos(phase)} 1)`);
+   symbol.querySelector('.magnetar-rotor').style.opacity=String(.65+.35*Math.abs(Math.cos(phase)));
+  }
+ }
 }
 addEventListener('scroll',()=>{if(!sweepQueued){sweepQueued=true;requestAnimationFrame(updateSweep);}},{passive:true});addEventListener('resize',updateSweep);reduceMotion.addEventListener('change',updateSweep);updateSweep();
 document.querySelector('#year').textContent=new Date().getFullYear();
