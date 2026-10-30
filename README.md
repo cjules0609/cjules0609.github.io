@@ -31,7 +31,7 @@ The supplied `deploy-pages.yml.example` is intentionally inactive during design 
 1. Copy that file to `.github/workflows/deploy-pages.yml` at the repository root.
 2. Set the repository's Settings → Pages → Source to GitHub Actions.
 3. Review the repository diff, then commit and push the final site and workflow.
-4. Run the “Deploy redesigned website” workflow from GitHub Actions.
+4. Push to `main` to deploy automatically, or run “Deploy redesigned website” manually from GitHub Actions.
 
 The workflow runs the same assembly script and uploads `_site/` as the public site. The public output excludes documentation, the workflow example, and `legacy/`. No custom domain is assumed. Publication itself requires GitHub access and has not been performed.
 
