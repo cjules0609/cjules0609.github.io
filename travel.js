@@ -18,7 +18,8 @@ window.initTravelMap = function () {
     const leftImg  = baseImg.cloneNode(); leftImg.setAttribute('x', -W);
     const rightImg = baseImg.cloneNode(); rightImg.setAttribute('x',  W);
     world.prepend(leftImg);
-    world.append(rightImg);
+    // All repeated land images must remain behind the marker layer.
+    world.insertBefore(rightImg, pointsLayer);
   }
 
   let scale = 1, tx = 0, ty = 0;
@@ -34,12 +35,19 @@ window.initTravelMap = function () {
   // The three tiled copies always cover the viewport within this range.
   function normTx(raw) {
     const period = W * scale;
-    return ((raw % period) + period) % period - period;
+    const wrapped = ((raw % period) + period) % period;
+    return wrapped === 0 ? 0 : wrapped - period;
   }
 
   // ---- View transform -------------------------------------------------------
 
+  let drawFrame = 0, lastPinScale = null, lastPinR = null;
   function draw() {
+    if (drawFrame) return;
+    drawFrame = requestAnimationFrame(() => { drawFrame = 0; drawNow(); });
+  }
+
+  function drawNow() {
     scale = clamp(scale, MIN_SCALE, MAX_SCALE);
     ty = clamp(ty, H * (1 - scale), 0);
     tx = normTx(tx);
@@ -48,6 +56,9 @@ window.initTravelMap = function () {
     // Counter-scale pins for constant screen size; render canonical + ghost copy.
     const inverse = (1 / scale).toFixed(4);
     const pinR = isTouchPrimary() ? 1.6 : 1;   // scale up hit/halo/light radii on touch
+    // Panning changes only the world transform. Recompute pin sizes only on zoom
+    // or pointer-mode changes, rather than touching hundreds of nodes every move.
+    if (scale !== lastPinScale || pinR !== lastPinR) {
     for (const pin of pins) {
       pin.node.setAttribute('transform',  `translate(${pin.x}     ${pin.y}) scale(${inverse})`);
       pin.ghost.setAttribute('transform', `translate(${pin.x + W} ${pin.y}) scale(${inverse})`);
@@ -57,6 +68,8 @@ window.initTravelMap = function () {
           el.querySelectorAll('circle').forEach((c, i) => c.setAttribute('r', base[i] * pinR));
         }
       }
+    }
+    lastPinScale = scale; lastPinR = pinR;
     }
     svg.classList.toggle('is-zoomed', scale > 1);
   }
@@ -274,6 +287,7 @@ window.initTravelMap = function () {
       if (!svg.isConnected) return;
       document.querySelector('.travel-map-toolbar>span').textContent = `${places.length} places & counting`;
       pins = places.map(createPin);
+      lastPinScale = null;
       pointsLayer.setAttribute('role', 'group');
       pointsLayer.setAttribute('aria-label', 'Places visited. Use arrow keys to move between places, Enter to select.');
       pointsLayer.append(...pins.map(p => p.node), ...pins.map(p => p.ghost));

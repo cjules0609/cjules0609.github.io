@@ -55,3 +55,8 @@ All four pages support direct loading and persistent-player navigation. Legacy h
 
 ### Travel map sync
 The Pages workflow refreshes the public Google My Maps locations on every deployment and daily at 11:17 UTC. Run `python3 scripts/sync_travel.py` to refresh locally, then `python3 build.py` to preview. New points use Nominatim for country/state lookup, with requests spaced at least 1.1 seconds apart. Existing coordinate labels are reused. Scheduled deployment data is rebuilt from Google and is not committed to the repository. The map must remain public. Wishlist entries are maintained separately in personal.html.
+
+### Travel basemap geometry
+`assets/travel-land.svg` is generated from Natural Earth's public-domain 1:10m land, coastline, minor-island, lake, country-boundary, and state/province-boundary layers, using the same equirectangular projection as the travel markers. Run `python3 scripts/build_travel_land.py` to rebuild it (downloads and caches the source GeoJSON in the system temp directory). `scripts/travel-map-sources.json` records dataset hashes. Land fills and coastline strokes are separate to avoid outlining internal polygon partitions. Rings and polygon holes are preserved, and antimeridian jumps are rejected. This is a detailed world overview, not a street-level map.
+
+The travel map shows country borders worldwide and state borders only in the United States.

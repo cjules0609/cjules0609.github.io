@@ -100,7 +100,7 @@ def render(meta, content, name):
 
 def render_pages():
     """Render every page in pages/ into the output directory."""
-    paths = sorted(PAGES_DIR.glob("*.html"))
+    paths = sorted(path for path in PAGES_DIR.glob("*.html") if not path.name.startswith("."))
     for path in paths:
         meta, content = read_page(path)
         (TARGET / path.name).write_text(render(meta, content, path.name), encoding="utf-8")
@@ -114,7 +114,7 @@ def write_search_files():
         encoding="utf-8",
     )
     entries = []
-    for path in sorted(PAGES_DIR.glob("*.html")):
+    for path in sorted(path for path in PAGES_DIR.glob("*.html") if not path.name.startswith(".")):
         modified = date.fromtimestamp(path.stat().st_mtime).isoformat()
         entries.append(
             f"  <url><loc>{page_url(path.name)}</loc>"
@@ -138,6 +138,8 @@ def stamp(match):
 def cache_bust():
     """Rewrite ?v= placeholders so browsers refetch a file only when it changes."""
     for page in TARGET.glob("*.html"):
+        if page.name.startswith("."):
+            continue
         text = page.read_text(encoding="utf-8")
         page.write_text(CACHE_BUSTED.sub(stamp, text), encoding="utf-8")
 

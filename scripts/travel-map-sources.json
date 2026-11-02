@@ -1,0 +1,14 @@
+{
+  "source": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/",
+  "scale": "1:10m",
+  "projection": "equirectangular",
+  "simplification_tolerance_svg_units": 0.08,
+  "sha256": {
+    "land": "1ac90796408bc6ad6911d69448485d3c4dbf2190370080368a09976e1c9f7416",
+    "minor_islands": "8c933ca7a4760256bdc46408355706e39764b0fa01c160c28888b90b4faec29f",
+    "lakes": "2d036f53dedec578001c5c30c2959ee7d4eebc1306900fa4367c49929ec8f2d9",
+    "coastline": "6f75ae0e0de157b14946e2255eb1f5486d9a13819032e26d4610852d296788f6",
+    "admin_0_boundary_lines_land": "74d9c16229c095fde65943a9919e337682f044bcebccb120764f38edf3b70f4a",
+    "admin_1_states_provinces_lines": "1a1f30ccaaf4cc9c4bde34266f0b8cbb955d3a4cf254b756912255f2ec7c75b6"
+  }
+}

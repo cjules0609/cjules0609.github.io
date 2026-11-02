@@ -1412,7 +1412,7 @@ main #hero-title,main #personal-title,main #contact-title,.research-main .resear
 }
 
 .travel-map-world>image {
-  filter: drop-shadow(0 0 4px #7acde522);
+  filter: none;
 }
 
 .travel-point {
