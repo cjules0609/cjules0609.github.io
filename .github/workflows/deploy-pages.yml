@@ -2,6 +2,8 @@ name: Deploy redesigned website
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "17 11 * * *"
   workflow_dispatch:
 permissions:
   contents: read
@@ -19,6 +21,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Refresh travel locations
+        run: python3 scripts/sync_travel.py
       - name: Prepare static website
         run: python3 build.py
       - uses: actions/upload-pages-artifact@v3

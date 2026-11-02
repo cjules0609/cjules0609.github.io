@@ -46,3 +46,19 @@ Official software logos are copied from the projects’ assets/logo.svg files: g
 `legacy/` preserves the old React source, package files, local assets, and previous README. Its existing uncommitted changes were retained. The current site needs no npm install or React build. The workflow example is inactive until copied into `.github/workflows/`.
 
 The root `service-worker.js` retires the previous React offline cache for returning visitors. Keep it in the deployment so old browsers can update.
+
+## Persistent music player
+
+`app.js` keeps one native Spotify playlist iframe mounted while internal navigation changes the page content. It appears as the full playlist on Personal before playback starts. Once started, the same iframe becomes an 80-pixel-tall bottom-center player on every page, including Personal. No custom track-loading buttons replace the playlist context. Spotify provides the compact layout and controls, artwork colors, and playback availability. Refreshing or opening a new tab resets the player.
+
+## Page organization
+
+- `index.html`: introduction, scroll-driven hero, research highlights, and links to the rest of the site.
+- `research.html`: detailed research, animated illustrations, scientific software, publications, teaching, and outreach.
+- `personal.html`: biography, hobbies, and Spotify playlists.
+- `contact.html`: email reveal and professional profiles.
+
+All four pages support direct loading and persistent-player navigation. Legacy homepage research/publication anchors redirect to Research.
+
+### Travel map sync
+The Pages workflow refreshes the public Google My Maps locations on every deployment and daily at 11:17 UTC. Run `python3 scripts/sync_travel.py` to refresh locally, then `python3 build.py` to preview. New points use Nominatim for country/state lookup, with requests spaced at least 1.1 seconds apart. Existing coordinate labels are reused. Scheduled deployment data is rebuilt from Google and is not committed to the repository. The map must remain public. Wishlist entries are maintained separately in personal.html.

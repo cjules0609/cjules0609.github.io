@@ -1,0 +1,688 @@
+[
+  {
+    "name": "Copenhagen",
+    "lon": 12.5683371,
+    "lat": 55.6760968,
+    "region": "Capital Region",
+    "country": "Denmark"
+  },
+  {
+    "name": "Rostock",
+    "lon": 12.0991466,
+    "lat": 54.0924406,
+    "region": "Mecklenburg-Vorpommern",
+    "country": "Germany"
+  },
+  {
+    "name": "Tallinn",
+    "lon": 24.7535746,
+    "lat": 59.4369608,
+    "region": "Harju County",
+    "country": "Estonia"
+  },
+  {
+    "name": "Saint Petersburg",
+    "lon": 30.3609097,
+    "lat": 59.9310584,
+    "region": "Saint Petersburg",
+    "country": "Russia"
+  },
+  {
+    "name": "Helsinki",
+    "lon": 24.938379,
+    "lat": 60.1698557,
+    "region": "Uusimaa",
+    "country": "Finland"
+  },
+  {
+    "name": "Stockholm",
+    "lon": 18.0656255,
+    "lat": 59.3327036,
+    "region": "Stockholm County",
+    "country": "Sweden"
+  },
+  {
+    "name": "London",
+    "lon": -0.1275862,
+    "lat": 51.5072178,
+    "region": "England",
+    "country": "United Kingdom"
+  },
+  {
+    "name": "Paris",
+    "lon": 2.3513765,
+    "lat": 48.8575475,
+    "region": "Île-de-France",
+    "country": "France"
+  },
+  {
+    "name": "Gibraltar",
+    "lon": -5.353585,
+    "lat": 36.140751,
+    "region": "",
+    "country": "Gibraltar"
+  },
+  {
+    "name": "Palma",
+    "lon": 2.6568551,
+    "lat": 39.5726541,
+    "region": "Balearic Islands",
+    "country": "Spain"
+  },
+  {
+    "name": "Barcelona",
+    "lon": 2.1686496,
+    "lat": 41.3874374,
+    "region": "Catalonia",
+    "country": "Spain"
+  },
+  {
+    "name": "Rome",
+    "lon": 12.4822025,
+    "lat": 41.8967068,
+    "region": "Lazio",
+    "country": "Italy"
+  },
+  {
+    "name": "Monaco",
+    "lon": 7.4246158,
+    "lat": 43.7384176,
+    "region": "",
+    "country": "Monaco"
+  },
+  {
+    "name": "Metropolitan City of Florence",
+    "lon": 11.2523792,
+    "lat": 43.7679178,
+    "region": "Tuscany",
+    "country": "Italy"
+  },
+  {
+    "name": "Milan",
+    "lon": 9.1824027,
+    "lat": 45.468503,
+    "region": "Lombardy",
+    "country": "Italy"
+  },
+  {
+    "name": "Athens",
+    "lon": 23.7275388,
+    "lat": 37.9838096,
+    "region": "Attica",
+    "country": "Greece"
+  },
+  {
+    "name": "Thessaloniki",
+    "lon": 22.9444191,
+    "lat": 40.6400629,
+    "region": "Central Macedonia",
+    "country": "Greece"
+  },
+  {
+    "name": "Mykonos",
+    "lon": 25.3667218,
+    "lat": 37.4414601,
+    "region": "South Aegean",
+    "country": "Greece"
+  },
+  {
+    "name": "Fira",
+    "lon": 25.4323206,
+    "lat": 36.4182677,
+    "region": "South Aegean",
+    "country": "Greece"
+  },
+  {
+    "name": "Oia",
+    "lon": 25.3753101,
+    "lat": 36.4618199,
+    "region": "South Aegean",
+    "country": "Greece"
+  },
+  {
+    "name": "Versailles",
+    "lon": 2.1297422,
+    "lat": 48.8022585,
+    "region": "Île-de-France",
+    "country": "France"
+  },
+  {
+    "name": "Kalamata",
+    "lon": 22.1143716,
+    "lat": 37.0366386,
+    "region": "Peloponnese",
+    "country": "Greece"
+  },
+  {
+    "name": "Clearwater",
+    "lon": -82.7958948,
+    "lat": 27.9655722,
+    "region": "Florida",
+    "country": "United States"
+  },
+  {
+    "name": "Dallas",
+    "lon": -96.7969879,
+    "lat": 32.7766642,
+    "region": "Texas",
+    "country": "United States"
+  },
+  {
+    "name": "Houston",
+    "lon": -95.3701108,
+    "lat": 29.7600771,
+    "region": "Texas",
+    "country": "United States"
+  },
+  {
+    "name": "Anchorage",
+    "lon": -149.8996785,
+    "lat": 61.2175758,
+    "region": "Alaska",
+    "country": "United States"
+  },
+  {
+    "name": "San Francisco",
+    "lon": -122.4194155,
+    "lat": 37.7749295,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Los Angeles",
+    "lon": -118.242643,
+    "lat": 34.0549076,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Sacramento",
+    "lon": -121.4944209,
+    "lat": 38.5781342,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Grand Canyon",
+    "lon": -112.1124846,
+    "lat": 36.0997631,
+    "region": "Arizona",
+    "country": "United States"
+  },
+  {
+    "name": "Redwood National and State Parks",
+    "lon": -124.041711,
+    "lat": 41.4017156,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Sequoia National Park",
+    "lon": -118.5657516,
+    "lat": 36.4863668,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Las Vegas",
+    "lon": -115.1391009,
+    "lat": 36.171563,
+    "region": "Nevada",
+    "country": "United States"
+  },
+  {
+    "name": "Lake Tahoe",
+    "lon": -120.0323507,
+    "lat": 39.0968493,
+    "region": "California / Nevada",
+    "country": "United States"
+  },
+  {
+    "name": "Crater Lake",
+    "lon": -122.1090039,
+    "lat": 42.9445872,
+    "region": "Oregon",
+    "country": "United States"
+  },
+  {
+    "name": "Bend",
+    "lon": -121.3153096,
+    "lat": 44.0581728,
+    "region": "Oregon",
+    "country": "United States"
+  },
+  {
+    "name": "Salem",
+    "lon": -123.0407496,
+    "lat": 44.9362411,
+    "region": "Oregon",
+    "country": "United States"
+  },
+  {
+    "name": "Portland",
+    "lon": -122.6783853,
+    "lat": 45.515232,
+    "region": "Oregon",
+    "country": "United States"
+  },
+  {
+    "name": "Seattle",
+    "lon": -122.3328481,
+    "lat": 47.6061389,
+    "region": "Washington",
+    "country": "United States"
+  },
+  {
+    "name": "Petrified Forest National Park",
+    "lon": -109.78204,
+    "lat": 35.065931,
+    "region": "Arizona",
+    "country": "United States"
+  },
+  {
+    "name": "Bryce Canyon National Park",
+    "lon": -112.1870895,
+    "lat": 37.5930377,
+    "region": "Utah",
+    "country": "United States"
+  },
+  {
+    "name": "Zion National Park",
+    "lon": -113.0263005,
+    "lat": 37.2982022,
+    "region": "Utah",
+    "country": "United States"
+  },
+  {
+    "name": "Mexico City",
+    "lon": -99.133208,
+    "lat": 19.4326077,
+    "region": "Mexico City",
+    "country": "Mexico"
+  },
+  {
+    "name": "Cancún",
+    "lon": -86.8515279,
+    "lat": 21.161908,
+    "region": "Quintana Roo",
+    "country": "Mexico"
+  },
+  {
+    "name": "Taipei City",
+    "lon": 121.5654268,
+    "lat": 25.0329636,
+    "region": "Taipei",
+    "country": "Taiwan"
+  },
+  {
+    "name": "Taichung City",
+    "lon": 120.6736482,
+    "lat": 24.1477358,
+    "region": "Taichung",
+    "country": "Taiwan"
+  },
+  {
+    "name": "Tainan City",
+    "lon": 120.2268758,
+    "lat": 22.9998999,
+    "region": "Tainan",
+    "country": "Taiwan"
+  },
+  {
+    "name": "Beijing",
+    "lon": 116.407395,
+    "lat": 39.904211,
+    "region": "Beijing",
+    "country": "China"
+  },
+  {
+    "name": "Shanghai",
+    "lon": 121.473701,
+    "lat": 31.230416,
+    "region": "Shanghai",
+    "country": "China"
+  },
+  {
+    "name": "Bangkok",
+    "lon": 100.5017651,
+    "lat": 13.7563309,
+    "region": "Bangkok",
+    "country": "Thailand"
+  },
+  {
+    "name": "Phuket",
+    "lon": 98.3307468,
+    "lat": 7.9843109,
+    "region": "Phuket",
+    "country": "Thailand"
+  },
+  {
+    "name": "Khon Kaen",
+    "lon": 102.8235558,
+    "lat": 16.4321527,
+    "region": "Khon Kaen",
+    "country": "Thailand"
+  },
+  {
+    "name": "Chiang Mai",
+    "lon": 98.6600586,
+    "lat": 18.7964642,
+    "region": "Chiang Mai",
+    "country": "Thailand"
+  },
+  {
+    "name": "Chiang Rai",
+    "lon": 99.7232673,
+    "lat": 19.8737421,
+    "region": "Chiang Rai",
+    "country": "Thailand"
+  },
+  {
+    "name": "Baotou",
+    "lon": 109.84021,
+    "lat": 40.6578099,
+    "region": "Inner Mongolia",
+    "country": "China"
+  },
+  {
+    "name": "Ordos City",
+    "lon": 109.78087,
+    "lat": 39.6084499,
+    "region": "Inner Mongolia",
+    "country": "China"
+  },
+  {
+    "name": "Hohhot",
+    "lon": 111.75199,
+    "lat": 40.8414899,
+    "region": "Inner Mongolia",
+    "country": "China"
+  },
+  {
+    "name": "Kingston",
+    "lon": -76.8099041,
+    "lat": 18.0178743,
+    "region": "Kingston and Saint Andrew",
+    "country": "Jamaica"
+  },
+  {
+    "name": "Baton Rouge",
+    "lon": -91.1871466,
+    "lat": 30.4514677,
+    "region": "Louisiana",
+    "country": "United States"
+  },
+  {
+    "name": "New Orleans",
+    "lon": -90.0758356,
+    "lat": 29.9508941,
+    "region": "Louisiana",
+    "country": "United States"
+  },
+  {
+    "name": "New York",
+    "lon": -74.0059728,
+    "lat": 40.7127753,
+    "region": "New York",
+    "country": "United States"
+  },
+  {
+    "name": "Boston",
+    "lon": -71.0565364,
+    "lat": 42.3555076,
+    "region": "Massachusetts",
+    "country": "United States"
+  },
+  {
+    "name": "Washington",
+    "lon": -77.0369274,
+    "lat": 38.9072873,
+    "region": "District of Columbia",
+    "country": "United States"
+  },
+  {
+    "name": "Philadelphia",
+    "lon": -75.1652215,
+    "lat": 39.9525839,
+    "region": "Pennsylvania",
+    "country": "United States"
+  },
+  {
+    "name": "Chicago",
+    "lon": -87.6323879,
+    "lat": 41.88325,
+    "region": "Illinois",
+    "country": "United States"
+  },
+  {
+    "name": "St. Louis",
+    "lon": -90.1982439,
+    "lat": 38.627428,
+    "region": "Missouri",
+    "country": "United States"
+  },
+  {
+    "name": "Orlando",
+    "lon": -81.3789269,
+    "lat": 28.5383832,
+    "region": "Florida",
+    "country": "United States"
+  },
+  {
+    "name": "Albuquerque",
+    "lon": -106.650422,
+    "lat": 35.0843859,
+    "region": "New Mexico",
+    "country": "United States"
+  },
+  {
+    "name": "Amarillo",
+    "lon": -101.8320065,
+    "lat": 35.2069816,
+    "region": "Texas",
+    "country": "United States"
+  },
+  {
+    "name": "Flagstaff",
+    "lon": -111.651302,
+    "lat": 35.1982836,
+    "region": "Arizona",
+    "country": "United States"
+  },
+  {
+    "name": "San Diego",
+    "lon": -117.1610838,
+    "lat": 32.715738,
+    "region": "California",
+    "country": "United States"
+  },
+  {
+    "name": "Tokyo",
+    "lon": 139.650027,
+    "lat": 35.6764225,
+    "region": "Tokyo",
+    "country": "Japan"
+  },
+  {
+    "name": "Nara",
+    "lon": 135.8048019,
+    "lat": 34.685109,
+    "region": "Nara Prefecture",
+    "country": "Japan"
+  },
+  {
+    "name": "Osaka",
+    "lon": 135.5012079,
+    "lat": 34.6952474,
+    "region": "Osaka Prefecture",
+    "country": "Japan"
+  },
+  {
+    "name": "Kyoto",
+    "lon": 135.7681489,
+    "lat": 35.011564,
+    "region": "Kyoto Prefecture",
+    "country": "Japan"
+  },
+  {
+    "name": "Seoul",
+    "lon": 126.9970831,
+    "lat": 37.550263,
+    "region": "Seoul",
+    "country": "South Korea"
+  },
+  {
+    "name": "Mount Hood",
+    "lon": -121.695951,
+    "lat": 45.373615,
+    "country": "United States",
+    "region": "Oregon"
+  },
+  {
+    "name": "Santa Cruz",
+    "lon": -122.028807,
+    "lat": 36.9741275,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "San Jose",
+    "lon": -121.8852525,
+    "lat": 37.33874,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Oakland",
+    "lon": -122.2711639,
+    "lat": 37.8043514,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Bakersfield",
+    "lon": -119.020061,
+    "lat": 35.3733492,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Los Alamos",
+    "lon": -106.3031138,
+    "lat": 35.8800364,
+    "country": "United States",
+    "region": "New Mexico"
+  },
+  {
+    "name": "Long Beach",
+    "lon": -118.1937395,
+    "lat": 33.7700504,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Santa Ana",
+    "lon": -117.867653,
+    "lat": 33.7454725,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Burbank",
+    "lon": -118.3074827,
+    "lat": 34.1820605,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Glendale",
+    "lon": -118.2488703,
+    "lat": 34.1463674,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Pasadena",
+    "lon": -118.144302,
+    "lat": 34.1476527,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Malibu",
+    "lon": -118.6923438,
+    "lat": 34.0380585,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Santa Barbara",
+    "lon": -119.698935,
+    "lat": 34.420285,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Monterey",
+    "lon": -121.8977688,
+    "lat": 36.5972925,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Joshua Tree National Park",
+    "lon": -115.9009923,
+    "lat": 33.873415,
+    "country": "United States",
+    "region": "California"
+  },
+  {
+    "name": "Meteor Crater Natural Landmark",
+    "lon": -111.0221934,
+    "lat": 35.0277544,
+    "country": "United States",
+    "region": "Arizona"
+  },
+  {
+    "name": "Pensacola",
+    "lon": -87.2189746,
+    "lat": 30.4076647,
+    "country": "United States",
+    "region": "Florida"
+  },
+  {
+    "name": "Tampa",
+    "lon": -82.4587527,
+    "lat": 27.9516896,
+    "country": "United States",
+    "region": "Florida"
+  },
+  {
+    "name": "St. Petersburg",
+    "lon": -82.6384451,
+    "lat": 27.7671271,
+    "country": "United States",
+    "region": "Florida"
+  },
+  {
+    "name": "Kissimmee Prairie Preserve State Park",
+    "lon": -81.0857231,
+    "lat": 27.5698247,
+    "country": "United States",
+    "region": "Florida"
+  },
+  {
+    "name": "Maui",
+    "lon": -156.3319253,
+    "lat": 20.7983626,
+    "country": "United States",
+    "region": "Hawaii"
+  },
+  {
+    "name": "Kauai",
+    "lon": -159.5261238,
+    "lat": 22.0964396,
+    "country": "United States",
+    "region": "Hawaii"
+  }
+]

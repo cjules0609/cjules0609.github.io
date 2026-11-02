@@ -1,3 +1,7 @@
+window.initResearch=function(){
+if(!document.querySelector('.cosmos,.research-symbol,#publication-list'))return ()=>{};
+const controller=new AbortController();
+const addEventListener=(type,handler,options={})=>window.addEventListener(type,handler,{...options,signal:controller.signal});
 /* Publication metadata from Connery Chen's October 2026 CV.
    Update this list as new papers appear. ADS searches use DOI identifiers
    so links remain useful without depending on a particular ADS bibcode. */
@@ -10,7 +14,7 @@ const publications = [
 function adsLink(doi){return `https://ui.adsabs.harvard.edu/search/q=${encodeURIComponent(`doi:"${doi}"`)}`;}
 document.querySelectorAll('[data-doi]').forEach(a=>{a.href=adsLink(a.dataset.doi);});
 const publicationList=document.querySelector('#publication-list');
-for(const p of publications){
+if(publicationList)for(const p of publications){
   const article=document.createElement('article');article.className='publication';
   const year=document.createElement('span');year.className='publication-year';year.textContent=p.date;
   const body=document.createElement('div');const title=document.createElement('h3');title.textContent=p.title;
@@ -19,15 +23,12 @@ for(const p of publications){
   const link=document.createElement('a');link.href=adsLink(p.doi);link.textContent='ADS ↗';link.setAttribute('aria-label',`${p.title} on NASA ADS`);
   body.append(title,authors,journal);article.append(year,body,link);publicationList.append(article);
 }
-const menuButton=document.querySelector('.menu-toggle');const nav=document.querySelector('#navigation');
-menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);});
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menuButton.setAttribute('aria-expanded','false');nav.classList.remove('open');}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuButton.getAttribute('aria-expanded')==='true'){menuButton.setAttribute('aria-expanded','false');nav.classList.remove('open');menuButton.focus();}});
 // Let the trailing cone edge pass the detector near the top of the viewport.
 const researchSymbols=[...document.querySelectorAll('.research-symbol')];
-const cosmos=document.querySelector('.cosmos');const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');let sweepQueued=false;
+const cosmos=document.querySelector('.cosmos');const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');let sweepQueued=false,sweepFrame=0;
 function updateSweep(){
  sweepQueued=false;
+ if(cosmos){
  const figure=cosmos.getBoundingClientRect();
  const w=cosmos.clientWidth,h=cosmos.clientHeight;
  const icon=document.querySelector('.satellite svg').getBoundingClientRect();
@@ -54,6 +55,7 @@ function updateSweep(){
  const guide=document.querySelector('.geometry-guide');
  guide.setAttribute('viewBox',`0 0 ${w} ${h}`);
  guide.querySelector('path').setAttribute('d',`M${w/2} ${h/2}L${detectorX-58*ux} ${detectorY-58*uy}`);
+ }
  updateResearchSymbols();
 
 }
@@ -77,23 +79,37 @@ function updateResearchSymbols(){
    symbol.querySelector('.merger-jets').setAttribute('transform',`scale(1 ${.15+aftermath*.85})`);
    symbol.querySelector('.kilonova').setAttribute('transform',`scale(${.25+aftermath*.95} ${.5+aftermath*.5})`);
   }else if(symbol.classList.contains('fxt-flash')){
-   symbol.querySelectorAll('.fxt-pulse').forEach(pulse=>{
-    pulse.setAttribute('transform',`scale(${.65+p*.8})`);
-    pulse.style.opacity=String(.85-p*.5);
-   });
+   const flash=Math.exp(-.5*((p-.43)/.12)**2);
+   const launch=Math.max(0,Math.min(1,(p-.23)/.52));
+   symbol.querySelector('.fxt-upper-jet').setAttribute('transform',`scale(1 ${.06+.94*launch})`);
+   symbol.querySelector('.fxt-lower-jet').setAttribute('transform',`scale(${.35+.65*launch} ${.06+.94*launch})`);
+   symbol.querySelector('.fxt-upper-jet').style.opacity=String(.15+.85*launch);
+   symbol.querySelector('.fxt-lower-jet').style.opacity=String(.12+.8*launch);
+   symbol.querySelector('.fxt-explosion').setAttribute('transform',`scale(${.35+p*.9})`);
+   symbol.querySelector('.fxt-explosion').style.opacity=String(.1+flash*.9);
+   symbol.querySelector('.fxt-debris').setAttribute('transform',`scale(${.25+p*1.25})`);
+   symbol.querySelector('.fxt-debris').style.opacity=String(Math.sin(Math.PI*p)*.75);
+   symbol.querySelector('.fxt-core').setAttribute('r',String(2.8+flash*2.2));
+   symbol.querySelector('.fxt-afterglow').setAttribute('transform',`scale(${.55+flash*.65})`);
   }else{
-   const phase=p*Math.PI*2;
-   symbol.querySelector('.magnetar-rotor').setAttribute('transform',`scale(${Math.cos(phase)} 1)`);
-   symbol.querySelector('.magnetar-rotor').style.opacity=String(.65+.35*Math.abs(Math.cos(phase)));
+   const phase=p*Math.PI*2-Math.PI*.6;
+   const x=53*Math.cos(phase),y=-25,depth=Math.sin(phase);
+   const width=5+8*(depth+1)/2;
+   const cone=(sign)=>{const tx=x*sign,ty=y*sign,len=Math.hypot(tx,ty),nx=-ty/len*width,ny=tx/len*width;return `M0 0L${tx+nx} ${ty+ny}L${tx-nx} ${ty-ny}Z`;};
+   symbol.querySelector('.frb-cone-front').setAttribute('d',cone(1));
+   symbol.querySelector('.frb-cone-front').style.opacity=String(.25+.65*(depth+1)/2);
+   symbol.querySelector('.frb-cone-back').setAttribute('d',cone(-1));
+   symbol.querySelector('.frb-cone-back').style.opacity=String(.25+.65*(1-depth)/2);
+   symbol.querySelector('.frb-beam-axis').setAttribute('d',`M${-x} ${-y}L${x} ${y}`);
+   const burst=Math.exp(-.5*((p-.55)/.055)**2);
+   symbol.querySelector('.frb-burst').setAttribute('r',String(16+burst*18));
+   symbol.querySelector('.frb-burst').style.opacity=String(.35+burst*.65);
+
   }
  }
 }
-addEventListener('scroll',()=>{if(!sweepQueued){sweepQueued=true;requestAnimationFrame(updateSweep);}},{passive:true});addEventListener('resize',updateSweep);reduceMotion.addEventListener('change',updateSweep);updateSweep();
+addEventListener('scroll',()=>{if(!sweepQueued){sweepQueued=true;sweepFrame=requestAnimationFrame(updateSweep);}},{passive:true});addEventListener('resize',updateSweep);reduceMotion.addEventListener('change',updateSweep,{signal:controller.signal});updateSweep();
 document.querySelector('#year').textContent=new Date().getFullYear();
-// Basic scraping deterrent: the email address is decoded only on interaction.
-const emailButton=document.querySelector('#reveal-email');
-emailButton.addEventListener('click',()=>{
-  const address=atob('Y29ubmVyeS5jaGVuQGxzdS5lZHU=');const link=document.createElement('a');
-  link.className='email-link';link.href='mailto:'+address;link.textContent=address+' ↗';
-  emailButton.replaceWith(link);link.focus();
-});
+
+return ()=>{controller.abort();cancelAnimationFrame(sweepFrame);};
+};
