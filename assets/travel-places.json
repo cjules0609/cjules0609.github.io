@@ -684,5 +684,12 @@
     "lat": 22.0964396,
     "country": "United States",
     "region": "Hawaii"
+  },
+  {
+    "name": "Pattaya",
+    "lon": 100.8926,
+    "lat": 12.9236,
+    "country": "Thailand",
+    "region": "Chonburi"
   }
 ]
