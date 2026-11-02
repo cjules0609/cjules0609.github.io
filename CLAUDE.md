@@ -5,13 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Preview source files directly
-python3 -m http.server 4173          # open http://localhost:4173/
-
-# Build the deployable _site/ output
+# Build the site (renders pages/ into the shared layout and copies assets to _site/)
 python3 build.py
 
-# Preview the built output
+# Preview the built output (re-run build.py after every edit)
 python3 -m http.server 4174 --directory _site
 
 # Refresh travel map data from Google My Maps (requires network)
@@ -21,11 +18,11 @@ python3 scripts/sync_travel.py
 python3 scripts/sync_travel.py --kml path/to/export.kml
 ```
 
-`_site/` is generated and git-ignored; regenerate it with `build.py` before previewing the final deployment artifact. Opening `index.html` directly in a browser also works for quick checks.
+`_site/` is generated and git-ignored. There are no root-level HTML files any more, so the site must be built before it can be previewed.
 
 ## Architecture
 
-This is a no-build, no-npm static site. There is no bundler, transpiler, or package manager for the current site. `legacy/` contains the old React implementation and can be ignored.
+This is a no-npm static site with a tiny Python build step. There is no bundler, transpiler, or package manager for the current site. `legacy/` contains the old React implementation and can be ignored.
 
 ### SPA-like navigation shell (`app.js`)
 
@@ -54,9 +51,17 @@ Legacy hash anchors (`#research`, `#about`, `#contact` on `/`) are redirected to
 - **Docked mode**: once `playback_started` fires, the iframe becomes an 80 px bottom-center bar on every page and `<body>` gets `has-native-music` (used in CSS to add bottom padding).
 - `window.musicPlayer` exposes `open()` and `select(id)` for use by `personal.js`.
 
+### Pages and layout
+
+Each page lives in `pages/<name>.html` as front matter (`title`, `description`, `nav`, `return_top`) followed by its `<main>…</main>` markup. `build.py` wraps it in `partials/layout.html`, inserting `partials/header.html` (the nav marks the current page via `{{current:<nav>}}`), `partials/footer.html`, and optionally `partials/return-top.html`. Edit the header, nav, footer, or `<head>` once in `partials/`. Adding a page means creating `pages/<name>.html` and a nav link in `partials/header.html`; `app.js` also keeps an allowlist of internal page paths for SPA navigation.
+
 ### Build pipeline
 
-`build.py` is a plain file copier. It maintains an explicit allowlist of files to copy into `_site/` and raises `FileNotFoundError` for any missing entry. Adding a new asset requires adding it to the `files` list in `build.py`.
+`build.py` renders the pages, then copies an explicit allowlist of files into `_site/` and raises `FileNotFoundError` for any missing entry. Adding a new asset requires adding it to the `files` list in `build.py`. It also rewrites every `?v=` query string in the built HTML to a content hash for cache-busting (the partials use `?v=0` placeholders).
+
+### SEO and sharing
+
+`partials/layout.html` emits canonical, Open Graph, Twitter Card and Person JSON-LD tags, filled from each page's front matter plus `SITE_URL` and `SHARE_IMAGE` in `build.py`. `build.py` also writes `robots.txt` and `sitemap.xml` (one entry per file in `pages/`). The share image is `assets/og-image.png` (1200×630); regenerate it by screenshotting an HTML card if the portrait or tagline changes.
 
 ### Travel data
 

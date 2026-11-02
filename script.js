@@ -18,7 +18,11 @@ if(publicationList)for(const p of publications){
   const article=document.createElement('article');article.className='publication';
   const year=document.createElement('span');year.className='publication-year';year.textContent=p.date;
   const body=document.createElement('div');const title=document.createElement('h3');title.textContent=p.title;
-  const authors=document.createElement('p');authors.textContent=p.authors;
+  const authors=document.createElement('p');
+  p.authors.split(/(Chen, C\. J\.)/).forEach(part=>{
+   if(part==='Chen, C. J.'){const me=document.createElement('strong');me.textContent=part;authors.append(me);}
+   else authors.append(part);
+  });
   const journal=document.createElement('div');journal.className='publication-journal';journal.textContent=p.journal;
   const link=document.createElement('a');link.href=adsLink(p.doi);link.textContent='ADS ↗';link.setAttribute('aria-label',`${p.title} on NASA ADS`);
   body.append(title,authors,journal);article.append(year,body,link);publicationList.append(article);
@@ -31,7 +35,7 @@ function updateSweep(){
  if(cosmos){
  const figure=cosmos.getBoundingClientRect();
  const w=cosmos.clientWidth,h=cosmos.clientHeight;
- const icon=document.querySelector('.satellite svg').getBoundingClientRect();
+ const icon=document.querySelector('.satellite svg')?.getBoundingClientRect();if(!icon){updateResearchSymbols();return;}
  // This is a crossing milestone, not the end of the animation.
  const crossingScroll=Math.max(1,icon.top+scrollY-72);
  const detectorX=icon.left-figure.left+icon.width/2,detectorY=icon.top-figure.top+icon.height/2;
@@ -57,7 +61,6 @@ function updateSweep(){
  guide.querySelector('path').setAttribute('d',`M${w/2} ${h/2}L${detectorX-58*ux} ${detectorY-58*uy}`);
  }
  updateResearchSymbols();
-
 }
 // Each illustration scrubs forward and backward with its own viewport position.
 function updateResearchSymbols(){
@@ -109,7 +112,6 @@ function updateResearchSymbols(){
  }
 }
 addEventListener('scroll',()=>{if(!sweepQueued){sweepQueued=true;sweepFrame=requestAnimationFrame(updateSweep);}},{passive:true});addEventListener('resize',updateSweep);reduceMotion.addEventListener('change',updateSweep,{signal:controller.signal});updateSweep();
-document.querySelector('#year').textContent=new Date().getFullYear();
 
 return ()=>{controller.abort();cancelAnimationFrame(sweepFrame);};
 };

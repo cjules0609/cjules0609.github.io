@@ -10,14 +10,11 @@
  let controller=null,apiRequested=false,selected=playlists[0][0],started=false,slotObserver=null;
  function positionPlayer(){
   const slot=content.querySelector('#inline-spotify-slot'),iframe=host.querySelector('iframe');
-  const inline=!!slot&&!started;
-  host.classList.toggle('is-docked',started);
-  host.classList.toggle('is-away',!inline&&!started);
-  document.body.classList.toggle('has-native-music',started);
-  if(slot){
-   slot.classList.toggle('music-is-active',started);
-   slot.querySelector('.spotify-loading').textContent=started?'Your music is playing in the player below. Choose a playlist on the left to change the soundtrack.':'Loading Spotify…';
-  }
+  // The full player stays inline on the Personal page; elsewhere it docks once music plays.
+  const inline=!!slot,docked=started&&!inline;
+  host.classList.toggle('is-docked',docked);
+  host.classList.toggle('is-away',!inline&&!docked);
+  document.body.classList.toggle('has-native-music',docked);
   if(inline){
    const rect=slot.getBoundingClientRect();
    Object.assign(host.style,{left:`${rect.left+scrollX}px`,top:`${rect.top+scrollY}px`,width:`${rect.width}px`,height:'452px'});
@@ -64,10 +61,29 @@
   }catch(error){if(error.name!=='AbortError')location.assign(url.href);}
  }
  function legacyResearch(url){if(['/','/index.html'].includes(url.pathname)&&['#research','#research-fxt','#research-frb','#publications','#software','#teaching'].includes(url.hash))return new URL('research.html'+url.hash,location.href);return url;}
- function scrollToHash(hash){const target=hash?document.getElementById(decodeURIComponent(hash.slice(1))):null;if(target)target.scrollIntoView();else window.scrollTo(0,0);}
+ async function copyEmail(button){
+  const address=atob('Y29ubmVyeS5jaGVuQGxzdS5lZHU='),status=button.parentElement.querySelector('.email-copy-status');
+  let copied=false;
+  try{await Promise.race([navigator.clipboard.writeText(address),new Promise((_,reject)=>setTimeout(reject,1000))]);copied=true;}
+  catch{
+   const field=document.createElement('textarea');field.value=address;field.style.cssText='position:fixed;opacity:0';
+   document.body.append(field);field.select();try{copied=document.execCommand('copy');}catch{}field.remove();
+  }
+  button.textContent=copied?'Copied ✓':'Copy failed';status.textContent=copied?'Email address copied to clipboard':'Could not copy; select the address instead';
+  setTimeout(()=>{button.textContent='Copy';status.textContent='';},2200);
+ }
+ function scrollToHash(hash){let id='';try{id=decodeURIComponent(hash.slice(1));}catch{}const target=id?document.getElementById(id):null;if(target)target.scrollIntoView();else window.scrollTo(0,0);}
  document.addEventListener('click',event=>{
   const menu=event.target.closest('.menu-toggle');if(menu){const state=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(state));content.querySelector('#navigation').classList.toggle('open',state);return;}
-  const email=event.target.closest('#reveal-email');if(email){const link=document.createElement('a');link.className='email-link';link.href='mailto:'+atob('Y29ubmVyeS5jaGVuQGxzdS5lZHU=');link.textContent=atob('Y29ubmVyeS5jaGVuQGxzdS5lZHU=')+' ↗';email.replaceWith(link);link.focus();return;}
+  const email=event.target.closest('#reveal-email');if(email){
+   const address=atob('Y29ubmVyeS5jaGVuQGxzdS5lZHU=');
+   const wrapper=document.createElement('div');wrapper.className='email-reveal';
+   const link=document.createElement('a');link.className='email-link';link.href='mailto:'+address;link.textContent=address+' ↗';
+   const copy=document.createElement('button');copy.className='email-copy';copy.type='button';copy.textContent='Copy';
+   const status=document.createElement('span');status.className='email-copy-status';status.setAttribute('role','status');
+   wrapper.append(link,copy,status);email.replaceWith(wrapper);link.focus();return;
+  }
+  const copyButton=event.target.closest('.email-copy');if(copyButton){copyEmail(copyButton);return;}
   const link=event.target.closest('a');if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||link.target||link.hasAttribute('download'))return;
   let url=legacyResearch(new URL(link.href));if(url.origin!==location.origin||!['/','/index.html','/research.html','/personal.html','/contact.html'].includes(url.pathname))return;
   if(url.hash==='#about'&&['/','/index.html'].includes(url.pathname))url=new URL('personal.html#about',location.href);

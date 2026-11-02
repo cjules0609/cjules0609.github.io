@@ -4,15 +4,15 @@ A standalone, buildless website for GitHub Pages. The previous React implementat
 
 ## Preview
 
-From this directory, run `python3 -m http.server 4173` and open http://localhost:4173/ . Opening index.html directly also works.
+Run `python3 build.py`, then `python3 -m http.server 4174 --directory _site` and open http://localhost:4174/ . Re-run the build after each edit.
 
 ## Update content
 
-- `index.html`: biography, research, teaching, outreach, links, and section order.
-- `script.js`: publication metadata, navigation, email reveal, and the scroll-driven hero.
-- `styles.css`: colors, spacing, typography, and mobile breakpoints.
-- `assets/Connery-Chen-CV.pdf`: replace with a new PDF using the same filename.
-- `assets/portrait.png`: replace with a new portrait using the same filename.
+- `pages/*.html`: page copy (front matter plus `<main>`). Shared `<head>`, header/nav and footer live once in `partials/`.
+- `script.js`: publication metadata (`publications` array) and the scroll-driven research animations.
+- `app.js`: SPA-style navigation, persistent Spotify player, email reveal.
+- `styles.css`: colors, spacing, typography, and breakpoints.
+- `assets/Connery-Chen-CV.pdf` and `assets/portrait.webp`: replace in place, keeping the filename.
 
 The contact button decodes the email only after interaction. This deters simple scraping; the downloadable CV still includes the public professional email address.
 
@@ -26,14 +26,7 @@ Design option sheets are archived outside the repository. macOS resource-fork me
 
 ## Deploy to GitHub Pages
 
-The supplied `deploy-pages.yml.example` is intentionally inactive during design review. Once the design is agreed:
-
-1. Copy that file to `.github/workflows/deploy-pages.yml` at the repository root.
-2. Set the repository's Settings → Pages → Source to GitHub Actions.
-3. Review the repository diff, then commit and push the final site and workflow.
-4. Push to `main` to deploy automatically, or run “Deploy redesigned website” manually from GitHub Actions.
-
-The workflow runs the same assembly script and uploads `_site/` as the public site. The public output excludes documentation, the workflow example, and `legacy/`. No custom domain is assumed. Publication itself requires GitHub access and has not been performed.
+`.github/workflows/deploy-pages.yml` runs `sync_travel.py` (non-blocking if it fails) and `build.py`, then deploys `_site/` on every push to `main` and daily at 11:17 UTC. Pages source must be set to GitHub Actions. `build.py` also replaces the `?v=` query strings in the HTML with content hashes for cache-busting.
 
 ## Verification
 
@@ -53,10 +46,10 @@ The root `service-worker.js` retires the previous React offline cache for return
 
 ## Page organization
 
-- `index.html`: introduction, scroll-driven hero, research highlights, and links to the rest of the site.
-- `research.html`: detailed research, animated illustrations, scientific software, publications, teaching, and outreach.
-- `personal.html`: biography, hobbies, and Spotify playlists.
-- `contact.html`: email reveal and professional profiles.
+- `pages/index.html`: introduction, scroll-driven hero, research highlights, and links to the rest of the site.
+- `pages/research.html`: detailed research, animated illustrations, scientific software, publications, teaching, and outreach.
+- `pages/personal.html`: biography, hobbies, and Spotify playlists.
+- `pages/contact.html`: email reveal and professional profiles.
 
 All four pages support direct loading and persistent-player navigation. Legacy homepage research/publication anchors redirect to Research.
 

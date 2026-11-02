@@ -22,6 +22,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - name: Refresh travel locations
+        # A Google/Nominatim outage should not block deploys; fall back to committed data.
+        continue-on-error: true
         run: python3 scripts/sync_travel.py
       - name: Prepare static website
         run: python3 build.py
