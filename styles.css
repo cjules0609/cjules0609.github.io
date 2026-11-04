@@ -933,6 +933,47 @@ nav a[aria-current="page"] {
   color: var(--accent);
 }
 
+.personal-currently {
+  border-top: 1px solid var(--line);
+  padding-top: 46px;
+  padding-bottom: 54px;
+}
+
+.currently-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 600px;
+}
+
+.currently-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: baseline;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.currently-item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.currently-label {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: .65rem;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.currently-value {
+  font-size: .95rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
 .contact-main {
   min-height: calc(100svh - 220px);
   padding-block: 64px 72px;
@@ -2004,6 +2045,11 @@ main #hero-title,main #personal-title,main #contact-title,.research-main .resear
   .personal-about {
     padding-top: 32px;
     padding-bottom: 36px;
+  }
+
+  .currently-item {
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
   }
 
   .contact-main {
