@@ -51,7 +51,7 @@
   const el=content.querySelector('.footer-counter');if(!el)return;
   if(visitCount!==null){el.textContent=visitCount;return;}
   fetch('https://cjules0609.goatcounter.com/counter/TOTAL.json')
-   .then(r=>r.json()).then(d=>{visitCount=d.count+' visits';if(el.isConnected)el.textContent=visitCount;}).catch(()=>{});
+   .then(r=>r.json()).then(d=>{visitCount='All-time visitors: '+d.count;if(el.isConnected)el.textContent=visitCount;}).catch(()=>{});
  }
  function init(){cleanup();cleanup=window.initResearch?.()||(()=>{});window.initPlaylists?.();window.initTravelMap?.();syncSelection();document.querySelectorAll('#year').forEach(el=>el.textContent=new Date().getFullYear());updateVisitCounter();}
  async function navigate(url,push=true){
