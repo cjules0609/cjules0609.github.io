@@ -664,6 +664,7 @@ input[type=range] {
   color: var(--footer-text);
   flex-wrap: wrap;
   align-items: flex-start;
+  position: relative;
 }
 
 .headline-part {
@@ -832,9 +833,11 @@ input[type=range] {
   color: var(--footer-text);
   opacity: .55;
   letter-spacing: .06em;
-  flex: 1;
-  text-align: center;
-  align-self: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25px;
+  white-space: nowrap;
 }
 
 .footer-signature p {
