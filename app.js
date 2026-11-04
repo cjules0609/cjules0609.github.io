@@ -57,7 +57,7 @@
    if(!doc.querySelector('main'))throw Error('Missing page content');
    cleanup();content.innerHTML=doc.body.innerHTML;document.title=doc.title;displayedPath=url.pathname;
    const description=doc.querySelector('meta[name="description"]');if(description)document.querySelector('meta[name="description"]').content=description.content;
-   if(push)history.pushState(null,'',url);init();scrollToHash(url.hash);const heading=content.querySelector('main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+   if(push)history.pushState(null,'',url);init();scrollToHash(url.hash);window.goatcounter?.count({path:url.pathname});const heading=content.querySelector('main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
   }catch(error){if(error.name!=='AbortError')location.assign(url.href);}
  }
  function legacyResearch(url){if(['/','/index.html'].includes(url.pathname)&&['#research','#research-fxt','#research-frb','#publications','#software','#teaching'].includes(url.hash))return new URL('research.html'+url.hash,location.href);return url;}
