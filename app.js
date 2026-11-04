@@ -7,7 +7,7 @@
  const host=document.createElement('div');host.className='spotify-host is-away';
  const mount=document.createElement('div');mount.id='spotify-mount';host.append(mount);
  const dismiss=document.createElement('button');dismiss.className='native-music-dismiss';dismiss.type='button';dismiss.setAttribute('aria-label','Pause music and close compact player');dismiss.textContent='Close ⌄';host.append(dismiss);document.body.append(host);
- let controller=null,apiRequested=false,selected=playlists[0][0],started=false,slotObserver=null;
+ let controller=null,apiRequested=false,selected=playlists[0][0],started=false,slotObserver=null,visitCount=null;
  function positionPlayer(){
   const slot=content.querySelector('#inline-spotify-slot'),iframe=host.querySelector('iframe');
   // The full player stays inline on the Personal page; elsewhere it docks once music plays.
@@ -47,7 +47,13 @@
  window.addEventListener('resize',positionPlayer);
  dismiss.addEventListener('click',()=>{controller?.pause();started=false;positionPlayer();content.querySelector('.playlist-tab[aria-selected="true"]')?.focus({preventScroll:true});});
  let cleanup=()=>{},navigationController=null,displayedPath=location.pathname;
- function init(){cleanup();cleanup=window.initResearch?.()||(()=>{});window.initPlaylists?.();window.initTravelMap?.();syncSelection();document.querySelectorAll('#year').forEach(el=>el.textContent=new Date().getFullYear());}
+ function updateVisitCounter(){
+  const el=content.querySelector('.footer-counter');if(!el)return;
+  if(visitCount!==null){el.textContent=visitCount;return;}
+  fetch('https://cjules0609.goatcounter.com/counter/TOTAL.json')
+   .then(r=>r.json()).then(d=>{visitCount=d.count+' visits';if(el.isConnected)el.textContent=visitCount;}).catch(()=>{});
+ }
+ function init(){cleanup();cleanup=window.initResearch?.()||(()=>{});window.initPlaylists?.();window.initTravelMap?.();syncSelection();document.querySelectorAll('#year').forEach(el=>el.textContent=new Date().getFullYear());updateVisitCounter();}
  async function navigate(url,push=true){
   if(url.pathname===displayedPath){if(push)history.pushState(null,'',url);scrollToHash(url.hash);return;}
   navigationController?.abort();const controller=new AbortController();navigationController=controller;

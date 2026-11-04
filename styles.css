@@ -827,6 +827,16 @@ input[type=range] {
   overflow: visible;
 }
 
+.footer-counter {
+  font-size: .65rem;
+  color: var(--footer-text);
+  opacity: .55;
+  letter-spacing: .06em;
+  flex: 1;
+  text-align: center;
+  align-self: center;
+}
+
 .footer-signature p {
   font-size: .65rem;
   line-height: 1.9;
