@@ -161,6 +161,26 @@ p {
   display: none;
 }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 200;
+  pointer-events: none;
+  transition: width .08s linear;
+}
+
+#site-content {
+  transition: opacity .15s ease;
+}
+
+#site-content.is-navigating {
+  opacity: 0;
+}
+
 .eyebrow,.kicker {
   font-family: Arial,Helvetica,sans-serif;
   font-size: .68rem;

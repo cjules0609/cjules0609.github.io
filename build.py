@@ -114,7 +114,7 @@ def write_search_files():
         encoding="utf-8",
     )
     entries = []
-    for path in sorted(path for path in PAGES_DIR.glob("*.html") if not path.name.startswith(".")):
+    for path in sorted(path for path in PAGES_DIR.glob("*.html") if not path.name.startswith(".") and path.name != "404.html"):
         modified = date.fromtimestamp(path.stat().st_mtime).isoformat()
         entries.append(
             f"  <url><loc>{page_url(path.name)}</loc>"

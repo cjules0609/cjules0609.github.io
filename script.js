@@ -67,8 +67,10 @@ function updateResearchSymbols(){
  for(const symbol of researchSymbols){
   const box=symbol.getBoundingClientRect();
   // Begin below the viewport, leaving the inspiral visible before merger.
-  const p=reduceMotion.matches?0:Math.max(0,Math.min(1,(innerHeight*1.35-box.top)/(innerHeight+box.height*.3)));
+  const base=reduceMotion.matches?0:(innerHeight*1.35-box.top)/(innerHeight+box.height*.3);
   if(symbol.classList.contains('merger')){
+   // ~18% slower
+   const p=Math.max(0,Math.min(1,base*.825));
    const inspiral=Math.min(1,p/.88);
    const angle=inspiral*Math.PI*3.6,radius=43*Math.pow(1-inspiral,.8);
    symbol.querySelectorAll('i').forEach((star,index)=>{
@@ -82,20 +84,24 @@ function updateResearchSymbols(){
    symbol.querySelector('.merger-jets').setAttribute('transform',`scale(1 ${.15+aftermath*.85})`);
    symbol.querySelector('.kilonova').setAttribute('transform',`scale(${.25+aftermath*.95} ${.5+aftermath*.5})`);
   }else if(symbol.classList.contains('fxt-flash')){
+   // 28% slower — 20% + another 10% compounded
+   const p=Math.max(0,Math.min(1,base*.72));
    const flash=Math.exp(-.5*((p-.43)/.12)**2);
    const launch=Math.max(0,Math.min(1,(p-.23)/.52));
    symbol.querySelector('.fxt-upper-jet').setAttribute('transform',`scale(1 ${.06+.94*launch})`);
-   symbol.querySelector('.fxt-lower-jet').setAttribute('transform',`scale(${.35+.65*launch} ${.06+.94*launch})`);
-   symbol.querySelector('.fxt-upper-jet').style.opacity=String(.15+.85*launch);
-   symbol.querySelector('.fxt-lower-jet').style.opacity=String(.12+.8*launch);
-   symbol.querySelector('.fxt-explosion').setAttribute('transform',`scale(${.35+p*.9})`);
-   symbol.querySelector('.fxt-explosion').style.opacity=String(.1+flash*.9);
-   symbol.querySelector('.fxt-debris').setAttribute('transform',`scale(${.25+p*1.25})`);
-   symbol.querySelector('.fxt-debris').style.opacity=String(Math.sin(Math.PI*p)*.75);
-   symbol.querySelector('.fxt-core').setAttribute('r',String(2.8+flash*2.2));
-   symbol.querySelector('.fxt-afterglow').setAttribute('transform',`scale(${.55+flash*.65})`);
+   symbol.querySelector('.fxt-lower-jet').setAttribute('transform',`scale(${.2+1.0*launch} ${.06+.94*launch})`);
+   symbol.querySelector('.fxt-upper-jet').style.opacity=String(.1+.9*launch);
+   symbol.querySelector('.fxt-lower-jet').style.opacity=String(.08+.92*launch);
+   symbol.querySelector('.fxt-explosion').setAttribute('transform',`scale(${.2+p*1.4})`);
+   symbol.querySelector('.fxt-explosion').style.opacity=String(.08+flash*.92);
+   symbol.querySelector('.fxt-debris').setAttribute('transform',`scale(${.15+p*1.8})`);
+   symbol.querySelector('.fxt-debris').style.opacity=String(Math.sin(Math.PI*p)*.9);
+   symbol.querySelector('.fxt-core').setAttribute('r',String(2.5+flash*3.5));
+   symbol.querySelector('.fxt-afterglow').setAttribute('transform',`scale(${.4+flash*1.1})`);
   }else{
-   const phase=p*Math.PI*2-Math.PI*.6;
+   // FRB: 4π rotation over 2× scroll duration
+   const p=Math.max(0,Math.min(1,base*.5));
+   const phase=p*Math.PI*4-Math.PI*.6;
    const x=53*Math.cos(phase),y=-25,depth=Math.sin(phase);
    const width=5+8*(depth+1)/2;
    const cone=(sign)=>{const tx=x*sign,ty=y*sign,len=Math.hypot(tx,ty),nx=-ty/len*width,ny=tx/len*width;return `M0 0L${tx+nx} ${ty+ny}L${tx-nx} ${ty-ny}Z`;};
