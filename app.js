@@ -7,8 +7,6 @@
  const host=document.createElement('div');host.className='spotify-host is-away';
  const mount=document.createElement('div');mount.id='spotify-mount';host.append(mount);
  const dismiss=document.createElement('button');dismiss.className='native-music-dismiss';dismiss.type='button';dismiss.setAttribute('aria-label','Pause music and close compact player');dismiss.textContent='Close ⌄';host.append(dismiss);document.body.append(host);
- const bar=document.createElement('div');bar.className='scroll-progress';bar.setAttribute('aria-hidden','true');document.body.append(bar);
- window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;bar.style.width=max>0?(scrollY/max*100).toFixed(2)+'%':'0%';},{passive:true});
  let controller=null,apiRequested=false,selected=playlists[0][0],started=false,slotObserver=null,visitCount=null;
  function positionPlayer(){
   const slot=content.querySelector('#inline-spotify-slot'),iframe=host.querySelector('iframe');
@@ -59,15 +57,19 @@
  async function navigate(url,push=true){
   if(url.pathname===displayedPath){if(push)history.pushState(null,'',url);scrollToHash(url.hash);return;}
   navigationController?.abort();const controller=new AbortController();navigationController=controller;
-  content.classList.add('is-navigating');
+  content.querySelector('main')?.classList.add('is-navigating');
   try{
-   const response=await fetch(url.pathname,{signal:controller.signal});if(!response.ok)throw Error('Page unavailable');
+   const [response]=await Promise.all([fetch(url.pathname,{signal:controller.signal}),new Promise(r=>setTimeout(r,160))]);
+   if(!response.ok)throw Error('Page unavailable');
    const doc=new DOMParser().parseFromString(await response.text(),'text/html');
    if(!doc.querySelector('main'))throw Error('Missing page content');
-   cleanup();content.innerHTML=doc.body.innerHTML;requestAnimationFrame(()=>content.classList.remove('is-navigating'));document.title=doc.title;displayedPath=url.pathname;
+   cleanup();content.innerHTML=doc.body.innerHTML;
+   const newMain=content.querySelector('main');if(newMain)newMain.classList.add('is-navigating');
+   document.title=doc.title;displayedPath=url.pathname;
    const description=doc.querySelector('meta[name="description"]');if(description)document.querySelector('meta[name="description"]').content=description.content;
-   if(push)history.pushState(null,'',url);init();scrollToHash(url.hash);window.goatcounter?.count({path:url.pathname});const heading=content.querySelector('main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
-  }catch(error){content.classList.remove('is-navigating');if(error.name!=='AbortError')location.assign(url.href);}
+   if(push)history.pushState(null,'',url);init();scrollToHash(url.hash);
+   requestAnimationFrame(()=>content.querySelector('main')?.classList.remove('is-navigating'));window.goatcounter?.count({path:url.pathname});const heading=content.querySelector('main h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+  }catch(error){content.querySelector('main')?.classList.remove('is-navigating');if(error.name!=='AbortError')location.assign(url.href);}
  }
  function legacyResearch(url){if(['/','/index.html'].includes(url.pathname)&&['#research','#research-fxt','#research-frb','#publications','#software','#teaching'].includes(url.hash))return new URL('research.html'+url.hash,location.href);return url;}
  async function copyEmail(button){

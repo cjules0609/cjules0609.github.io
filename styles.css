@@ -161,23 +161,11 @@ p {
   display: none;
 }
 
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 0%;
-  background: var(--accent);
-  z-index: 200;
-  pointer-events: none;
-  transition: width .08s linear;
-}
-
-#site-content {
+main {
   transition: opacity .15s ease;
 }
 
-#site-content.is-navigating {
+main.is-navigating {
   opacity: 0;
 }
 
